@@ -12,6 +12,17 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
+archivo=open("data.csv")
+
+data=archivo.readlines()
+archivo.close()
+   
+matrix=[]
+for ind in range(0,len(data)):
+   matrix.append(data[ind].split("\t"))
+
+
+
 
 def pregunta_01():
     """
@@ -21,7 +32,11 @@ def pregunta_01():
     214
 
     """
-    return
+    suma=0
+    for i in range(0,len(matrix)):
+        suma += int(matrix[i][1])
+        
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +54,23 @@ def pregunta_02():
     ]
 
     """
-    return
+    letras=[]
+    for i in range(0,len(matrix)):
+        if  matrix[i][0] not in letras:
+            letras.append(matrix[i][0])
+
+    letras=sorted(letras)
+    Rta=[]
+    for i in range(0, len(letras)):
+        cont=0
+        for j in range(0,len(matrix)):
+            if letras[i]==matrix[j][0]:
+                cont += 1
+        Rta.append((letras[i], cont))    
+
+    
+    
+    return Rta
 
 
 def pregunta_03():
@@ -57,7 +88,23 @@ def pregunta_03():
     ]
 
     """
-    return
+    letras=[]
+    for i in range(0,len(matrix)):
+      if  matrix[i][0] not in letras:
+        letras.append(matrix[i][0])
+
+    letras=sorted(letras)
+    Rta=[]
+    for i in range(0, len(letras)):
+        suma=0
+        for j in range(0,len(matrix)):
+            if letras[i]==matrix[j][0]:
+                suma += int(matrix[j][1])
+        Rta.append((letras[i], suma))
+    
+
+    
+    return Rta
 
 
 def pregunta_04():
@@ -82,7 +129,24 @@ def pregunta_04():
     ]
 
     """
-    return
+    Meses=[]
+    for i in range(0,len(matrix)):
+        mes=matrix[i][2]
+        if mes[5:7] not in Meses:
+          Meses.append(mes[5:7])
+    Meses=sorted(Meses)
+
+    Rta=[]
+    for i in range(0,len(Meses)):
+        cont=0
+        for j in range(0, len(matrix)):
+            mes=matrix[j][2]
+            if Meses[i]==mes[5:7]:
+               cont += 1
+        Rta.append((Meses[i],cont))        
+
+    
+    return Rta
 
 
 def pregunta_05():
@@ -100,7 +164,22 @@ def pregunta_05():
     ]
 
     """
-    return
+    letras=[]
+    for i in range(0,len(matrix)):
+        if matrix[i][0] not in letras:
+           letras.append(matrix[i][0]) 
+    letras=sorted(letras)
+
+    Rta=[]
+    for i in range(0,len(letras)):
+        valetras=[]
+        for j in range(0,len(matrix)):
+            if letras[i]==matrix[j][0]:
+                valetras.append(int(matrix[j][1]))
+        Rta.append((letras[i],max(valetras),min(valetras)))
+
+        
+    return Rta
 
 
 def pregunta_06():
@@ -125,7 +204,37 @@ def pregunta_06():
     ]
 
     """
-    return
+    claves=[]
+    for i in range(0,len(matrix)):
+        clave=matrix[i][4]
+        j=0
+        k=0
+        while k+5<len(clave):
+            k=clave.find(":",j)
+            key=clave[j:k]
+            valor=int(clave[k+1:clave.find(",",j)])
+            j=clave.find(",",j)+1
+            claves.append((key,valor))    
+        
+    claves=sorted(claves)
+
+    keys=[]
+    for i in range(0,len(claves)):
+        if claves[i][0] not in keys:
+            keys.append(claves[i][0])
+
+    rta=[]
+    for i in range(0,len(keys)):
+        valr=[]
+        for j in range(0,len(claves)):
+           if keys[i]==claves[j][0]:
+               valr.append(claves[j][1])
+        rta.append((keys[i],min(valr),max(valr)))
+
+
+    
+    
+    return rta
 
 
 def pregunta_07():
@@ -149,7 +258,25 @@ def pregunta_07():
     ]
 
     """
-    return
+    ValUnic=[]
+    for i in range(0,len(matrix)):
+        if matrix[i][1] not in ValUnic:
+            ValUnic.append(matrix[i][1])
+          
+    ValUnic=sorted(ValUnic)
+
+    Rta=[]
+    for i in range(0, len(ValUnic)):
+        letras=[]           
+        for j in range(0, len(matrix)):
+            if ValUnic[i]==matrix[j][1]:
+                letras.append(matrix[j][0])
+                
+        Rta.append((int(ValUnic[i]),letras))    
+
+    
+    
+    return Rta
 
 
 def pregunta_08():
@@ -174,7 +301,24 @@ def pregunta_08():
     ]
 
     """
-    return
+    ValUnic=[]
+    for i in range(0,len(matrix)):
+        if matrix[i][1] not in ValUnic:
+            ValUnic.append(matrix[i][1])
+          
+    ValUnic=sorted(ValUnic)
+
+    Rta=[]
+    for i in range(0, len(ValUnic)):
+        letras=[]           
+        for j in range(0, len(matrix)):
+            if ValUnic[i]==matrix[j][1] and matrix[j][0] not in letras :
+               letras.append(matrix[j][0])
+        letras=sorted(letras)        
+        Rta.append((int(ValUnic[i]),letras))    
+
+    
+    return Rta
 
 
 def pregunta_09():
@@ -197,7 +341,37 @@ def pregunta_09():
     }
 
     """
-    return
+    diccol5=[]       
+    for i in range(0, len(matrix)):
+        clave=matrix[i][4]
+        k=0
+        j=0
+        while k+5<len(clave):
+            k=clave.find(":",j)
+            key=clave[j:k]
+            valor=int(clave[k+1:clave.find(",",j)])
+            j=clave.find(",",j)+1
+            diccol5.append((key,valor)) 
+         
+    col5u=[]
+    for i in range(0,len(diccol5)):
+         if diccol5[i][0] not in col5u:
+             col5u.append(diccol5[i][0])
+
+    col5u=sorted(col5u)
+
+    list=[]
+    for i in range(0,len(col5u)):
+        cont=0
+        for j in range(0, len(diccol5)):
+             if col5u[i]==diccol5[j][0]:
+                 cont+=1
+        list.append((col5u[i],cont))
+             
+    Rta=dict(list)
+
+    
+    return Rta
 
 
 def pregunta_10():
@@ -218,7 +392,15 @@ def pregunta_10():
 
 
     """
-    return
+    Rta=[]
+    for i in range(0,len(matrix)):
+        col4=matrix[i][3].split(",")
+        col5=matrix[i][4].split(",")
+        Rta.append((matrix[i][0],len(col4),len(col5)))
+    
+
+    
+    return Rta
 
 
 def pregunta_11():
@@ -239,7 +421,27 @@ def pregunta_11():
 
 
     """
-    return
+    col4=[]
+    for i in range(0,len(matrix)):
+        if matrix[i][3][:1] not in col4:
+            col4.append(matrix[i][3][:1])
+
+    col4=sorted(col4)
+
+    rta=[]
+    for i in range(0,len(col4)):
+        sumcol2=0
+        for j in range(0,len(matrix)):
+            a=[]
+            a=matrix[j][3].split(",")
+            for k in range(0,len(a)):
+                if col4[i]==a[k]:
+                  sumcol2=sumcol2+int(matrix[j][1])
+               
+        rta.append((col4[i], sumcol2))
+
+    
+    return dict(rta)
 
 
 def pregunta_12():
@@ -257,4 +459,22 @@ def pregunta_12():
     }
 
     """
-    return
+    coln1=[]
+    for i in range(0,len(matrix)):
+        if matrix[i][0] not in coln1:
+           coln1.append(matrix[i][0])
+           
+    coln1=sorted(coln1)
+
+    Rta=[]
+    for i in range(0,len(coln1)):
+        valor=0
+        for j in range(0, len(matrix)):
+            if coln1[i]==matrix[j][0]:
+               coln5=matrix[j][4].split(",")
+               for k in range(0,len(coln5)):
+                   valor +=int(coln5[k][coln5[k].find(":")+1:])
+        Rta.append((coln1[i],valor))       
+
+
+    return dict(Rta)
